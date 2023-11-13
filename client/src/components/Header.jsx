@@ -1,7 +1,10 @@
 import { FaSearch } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { UseSelector } from "react-redux";
 
 export default function Header() {
+  const { currentUser } = useSelector((state) => state.user);
+
   return (
     /*background color of light grey*/
     /*medium shadow*/
@@ -57,8 +60,16 @@ export default function Header() {
               About
             </li>
           </Link>
-          <Link to={"/sign-in"}>
-            <li className=" text-slate-700 hover: underline">Sign in</li>
+          <Link to={"/profile"}>
+            {currentUser ? (
+              <img
+                className="rounded-full h-7 w-7 object-cover"
+                src={currentUser.avatar}
+                alt="profile picture"
+              />
+            ) : (
+              <li className=" text-slate-700 hover: underline">Sign in</li>
+            )}
           </Link>
         </ul>
       </div>
