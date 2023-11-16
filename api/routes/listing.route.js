@@ -12,6 +12,6 @@ router.post("/create", verifyToken, create);
 router.post("/delete/:id", verifyToken, deleteListing);
 router.post("/update/:id", verifyToken, updateListing);
 router.get("/get/:id", verifyToken, getListing);
-router.get("/get", verifyToken, getListings);
+router.get("/get", getListings);
 
 export default router;
