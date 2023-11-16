@@ -54,7 +54,6 @@ export default function Header() {
           ## flex, items in the center
           */}
         <form
-          on
           onSubmit={handleSubmit}
           className="bg-slate-100 p-3 rounded-lg flex items-center"
         >
