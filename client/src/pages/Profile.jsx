@@ -7,7 +7,7 @@ import {
   ref,
   uploadBytesResumable,
 } from "firebase/storage";
-import { app } from "../firebase.js";
+import app from "../firebase";
 import {
   updateUserStart,
   updateUserSuccess,
