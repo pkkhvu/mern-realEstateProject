@@ -1,15 +1,14 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import userRouter from "./routes/user.route";
-import authRouter from "./routes/auth.route";
-import listingRouter from "./routes/listing.route";
+import userRouter from "./routes/user.route.js";
+import authRouter from "./routes/auth.route.js";
+import listingRouter from "./routes/listing.route.js";
 import cookieParser from "cookie-parser";
 import path from "path";
 
 dotenv.config();
 
-// NOT CURRENTLY CONNECTED TO ANY DATABASE. MONGODBURL IS NOT A VALID CONNECTION STRING.
 mongoose
   .connect(process.env.MONGODBURL)
   .then(() => {
