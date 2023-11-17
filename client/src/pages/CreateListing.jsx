@@ -1,4 +1,3 @@
-import React from "react";
 import { useState } from "react";
 import {
   getStorage,
@@ -35,9 +34,9 @@ export default function CreateListing() {
 
   const handleImageSubmit = (e) => {
     if (files.length > 0 && files.length + formData.imageUrls.length < 7) {
-      const images = [];
+      const promises = [];
       for (let i = 0; i < files.length; i++) {
-        images.push(storeImage(files[i]));
+        promises.push(storeImage(files[i]));
       }
       Promise.all(promises)
         .then((urls) => {

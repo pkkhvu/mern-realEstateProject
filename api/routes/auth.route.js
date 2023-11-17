@@ -1,5 +1,10 @@
 import express from "express";
-import { google, signin, signup } from "../controllers/auth.controller";
+import {
+  google,
+  signin,
+  signup,
+  signOut,
+} from "../controllers/auth.controller";
 const router = express.Router();
 
 router.post("/signup", signup);

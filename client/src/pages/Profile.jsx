@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useRef } from "react";
 import {
@@ -31,7 +31,7 @@ export default function Profile() {
   const [formData, setFormData] = useState({});
   const [updateSuccess, setUpdateSuccess] = useState(false);
   const [showListingsError, setShowListingsError] = useState(false);
-  const [getUserListings, setGetUserListings] = useState([]);
+  const [userListings, setUserListings] = useState([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -114,25 +114,25 @@ export default function Profile() {
       const res = await fetch("/api/user/signout");
       const data = await res.json();
       if (data.success === false) {
-        dispatch(signoutUserFailure(data.message));
+        dispatch(deleteUserFailure(data.message));
         return;
       }
-      dispatch(signoutUserSuccessUserSuccess(data));
-    } catch (error) {}
+      dispatch(deleteUserSuccess(data));
+    } catch (error) {
+      dispatch(deleteUserFailure(data.message));
+    }
   };
 
   const handleShowListings = async () => {
     try {
       setShowListingsError(false);
-      const res = await fetch("/api/user/listings/${currentUser._id}", {
-        method: "GET",
-      });
+      const res = await fetch("/api/user/listings/${currentUser._id}");
       const data = await res.json();
       if (data.success === false) {
         setShowListingsError(true);
         return;
       }
-      setGetUserListings(data);
+      setUserListings(data);
     } catch (error) {
       setShowListingsError(true);
     }
@@ -149,7 +149,7 @@ export default function Profile() {
         return;
       }
 
-      setGetUserListings((prev) =>
+      setUserListings((prev) =>
         prev.filter((listing) => listing._id !== listingId)
       );
     } catch (error) {
@@ -233,24 +233,23 @@ export default function Profile() {
         >
           Delete Account
         </span>
-        <span onClick={signOut} className="text-red-700 cursor-pointer">
+        <span onClick={handleSignOut} className="text-red-700 cursor-pointer">
           Sign out
         </span>
       </div>
       <p className="text-green-700 mt-5">
         {updateSuccess ? "User is updated successfully!" : ""}
       </p>
-      //w-full sets the text in the middle
       <button onClick={handleShowListings} className="text-green-700 w-full">
         Show All Listings
       </button>
       <p className="text-red-700 mt-5">{showListingsError ? "Error" : ""}</p>
-      {getUserListings && getUserListings.length > 0 && (
+      {userListings && userListings.length > 0 && (
         <div className="flex flex-col gap-4">
           <h1 className="text-center my-7 text-2xl font-semibold">
             Your listings
           </h1>
-          {getUserListings.map((listing) => (
+          {userListings.map((listing) => (
             <div
               key={listing._id}
               className="border rounded-lg p-3 flex justify-between items-center gap-4"

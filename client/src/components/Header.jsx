@@ -5,96 +5,67 @@ import { useEffect, useState } from "react";
 
 export default function Header() {
   const { currentUser } = useSelector((state) => state.user);
-  const [search, setSearch] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
-
   const handleSubmit = (e) => {
     e.preventDefault();
     const urlParams = new URLSearchParams(window.location.search);
-    urlParams.set("search", search);
+    urlParams.set("searchTerm", searchTerm);
     const searchQuery = urlParams.toString();
     navigate(`/search?${searchQuery}`);
   };
 
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const searchTermFromUrl = urlParams.get("search");
+    const urlParams = new URLSearchParams(location.search);
+    const searchTermFromUrl = urlParams.get("searchTerm");
     if (searchTermFromUrl) {
-      setSearch(searchTermFromUrl);
+      setSearchTerm(searchTermFromUrl);
     }
   }, [location.search]);
-
   return (
-    /*background color of light grey*/
-    /*medium shadow*/
     <header className="bg-slate-200 shadow-md">
-      {/*
-      ## flex setup with equal spacing between elements pushing to them the start and end edges
-      ## max width of 6xl
-      ## auto margin left and right
-      ## padding of 3
-      */}
-      <div className="flex justify-between items-center max-width-6xl mx-auto p-3">
-        {/*
-        ## bold font
-        ## small text
-        ## extra large text on small devices
-        ## flex, flex-wrap
-    */}
-        <Link to={"/"}>
-          <h1 className="fond-bold text-sm sm:text-xl flex flex-wrap">
-            <span className="text-slate-500">Kevin</span>
+      <div className="flex justify-between items-center max-w-6xl mx-auto p-3">
+        <Link to="/">
+          <h1 className="font-bold text-sm sm:text-xl flex flex-wrap">
+            <span className="text-slate-500">Sahand</span>
             <span className="text-slate-700">Estate</span>
           </h1>
         </Link>
-        {/* 
-          ## background color
-          ## padding of 3
-          ## rounded corners
-          ## flex, items in the center
-          */}
         <form
           onSubmit={handleSubmit}
           className="bg-slate-100 p-3 rounded-lg flex items-center"
         >
           <input
             type="text"
-            placeholder="Search"
-            /* transparent background, width of 24px, width of 64px on small devices, remove browser focus*/
+            placeholder="Search..."
             className="bg-transparent focus:outline-none w-24 sm:w-64"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
           <button>
-            <FaSearch className="text-slate-500" />
+            <FaSearch className="text-slate-600" />
           </button>
         </form>
-        {/* gap between each <li> element */}
         <ul className="flex gap-4">
-          {/* 
-          ## on smaller screens, element is hidden but is visible on larger screens
-          ## 'hidden' and 'sm:inline' is a way to conditionally show or hide elements based on screen size
-          ## shows the 'home' and 'about' links beside each other because of inline, rather than on a new line (like block)
-          */}
-          <Link to={"/"}>
-            <li className="hidden sm:inline text-slate-700 hover: underline">
+          <Link to="/">
+            <li className="hidden sm:inline text-slate-700 hover:underline">
               Home
             </li>
           </Link>
-          <Link to={"/about"}>
-            <li className="hidden sm:inline text-slate-700 hover: underline">
+          <Link to="/about">
+            <li className="hidden sm:inline text-slate-700 hover:underline">
               About
             </li>
           </Link>
-          <Link to={"/profile"}>
+          <Link to="/profile">
             {currentUser ? (
               <img
                 className="rounded-full h-7 w-7 object-cover"
                 src={currentUser.avatar}
-                alt="profile picture"
+                alt="profile"
               />
             ) : (
-              <li className=" text-slate-700 hover: underline">Sign in</li>
+              <li className=" text-slate-700 hover:underline"> Sign in</li>
             )}
           </Link>
         </ul>

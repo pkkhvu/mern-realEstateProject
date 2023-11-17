@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { MdLocationOn } from "react-icons/md";
 
@@ -32,17 +31,17 @@ export default function Card({ listing }) {
             {listing.offer
               ? listing.discountPrice.toLocaleString("en-US")
               : listing.regularPrice.toLocaleString("en-US")}
-            {listing.type === "rent" && "/ month"}
+            {listing.type === "rent" && " / month"}
           </p>
           <div className="text-slate-700">
             <div className="font-bold text-xs ">
               {listing.bedrooms > 1
-                ? `${listing.bedrooms} bedrooms`
+                ? `${listing.bedrooms} beds`
                 : `${listing.bedrooms} bed`}
             </div>
             <div className="font-bold text-xs ">
               {listing.bathrooms > 1
-                ? `${listing.bathrooms} bathrooms`
+                ? `${listing.bathrooms} baths`
                 : `${listing.bathrooms} bath`}
             </div>
           </div>

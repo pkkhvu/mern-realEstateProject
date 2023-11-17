@@ -1,4 +1,3 @@
-import React from "react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -31,7 +30,7 @@ export default function SignIn() {
     //ensures a page doesn't reload like a normal form submission would do
     e.preventDefault();
     try {
-      dispatch(signInStart);
+      dispatch(signInStart());
       const res = await fetch("/api/auth/signin", {
         method: "POST",
         headers: {
