@@ -17,6 +17,7 @@ export default function Search() {
 
   const [loading, setLoading] = useState(false);
   const [listings, setListings] = useState([]);
+  const [showMore, setShowMore] = useState(false);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
@@ -49,9 +50,15 @@ export default function Search() {
 
     const fetchListings = async () => {
       setLoading(true);
+      setShowMore(false);
       const searchQuery = urlParams.toString();
       const response = await fetch(`/api/listings/get?${searchQuery}`);
       const data = await response.json();
+      if (data.length > 8) {
+        setShowMore(true);
+      } else {
+        setShowMore(false);
+      }
       setListings(data);
       setLoading(false);
     };
@@ -110,6 +117,20 @@ export default function Search() {
     urlParams.set("order", sideBarData.order);
     const searchQuery = urlParams.toString();
     Navigate(`/search?${searchQuery}`);
+  };
+
+  const onShowMoreClick = async () => {
+    const numberOfListings = listings.length;
+    const startIndex = numberOfListings;
+    const urlParams = new URLSearchParams(location.search);
+    urlParams.set("startIndex", startIndex);
+    const searchQuery = urlParams.toString();
+    const response = await fetch(`/api/listings/get?${searchQuery}`);
+    const data = await response.json();
+    if (data.length < 9) {
+      setShowMore(false);
+    }
+    setListings([...listings, ...data]);
   };
 
   return (
@@ -234,6 +255,14 @@ export default function Search() {
             listings.map((listing) => (
               <Card key={listing._id} listing={listing} />
             ))}
+          {showMore && (
+            <button
+              className="text-green-700 hover:underline p-7 text-center w-full"
+              onClick={onShowMoreClick}
+            >
+              Show more
+            </button>
+          )}
         </div>
       </div>
     </div>
