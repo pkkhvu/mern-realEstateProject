@@ -1,10 +1,12 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function Contact({ listing }) {
   const [landlord, setLandlord] = useState(null);
   const [message, setMessage] = useState("");
-  const onChange = (e) => setMessage(e.target.value);
+  const onChange = (e) => {
+    setMessage(e.target.value);
+  };
 
   useEffect(() => {
     const fetchLandlord = async () => {
@@ -18,7 +20,6 @@ export default function Contact({ listing }) {
     };
     fetchLandlord();
   }, [listing.userRef]);
-
   return (
     <>
       {landlord && (
@@ -33,15 +34,16 @@ export default function Contact({ listing }) {
             id="message"
             rows="2"
             value={message}
+            onChange={onChange}
             placeholder="Enter your message here..."
             className="w-full border p-3 rounded-lg"
-            onChange={onChange}
           ></textarea>
+
           <Link
-            to={`mailto:${landlord.email}?Subject=${listing.name}&body=${message}`}
+            to={`mailto:${landlord.email}?subject=Regarding ${listing.name}&body=${message}`}
             className="bg-slate-700 text-white text-center p-3 uppercase rounded-lg hover:opacity-95"
           >
-            Send message
+            Send Message
           </Link>
         </div>
       )}

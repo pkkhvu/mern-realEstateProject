@@ -1,5 +1,5 @@
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
-import app from "../firebase";
+import { app } from "../firebase";
 import { useDispatch } from "react-redux";
 import { signInSuccess } from "../redux/user/userSlice";
 import { useNavigate } from "react-router-dom";
@@ -13,6 +13,7 @@ export default function OAuth() {
       const auth = getAuth(app);
 
       const result = await signInWithPopup(auth, provider);
+
       const res = await fetch("/api/auth/google", {
         method: "POST",
         headers: {
@@ -28,16 +29,14 @@ export default function OAuth() {
       dispatch(signInSuccess(data));
       navigate("/");
     } catch (error) {
-      console.log("Could not sign in with google", error);
+      console.log("could not sign in with google", error);
     }
   };
-
   return (
-    //changing the type to button will ensure that no form is submitted
     <button
+      onClick={handleGoogleClick}
       type="button"
       className="bg-red-700 text-white p-3 rounded-lg uppercase hover:opacity-95"
-      onClick={handleGoogleClick}
     >
       Continue with google
     </button>

@@ -7,21 +7,13 @@ export default function SignUp() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      //target refers to the element that triggered the event (button click, input change, etc.)
-      //e.target.id gives you the element's ID that triggered the event
-      //e.target.value gives you the element's CURRENT value entered or selected in that input that triggered the event
-      //dynamic key, as each input has its own ID, so to access each input's value; you target its key.
       [e.target.id]: e.target.value,
     });
   };
-
-  //form stuff
   const handleSubmit = async (e) => {
-    //ensures a page doesn't reload like a normal form submission would do
     e.preventDefault();
     try {
       setLoading(true);
@@ -33,9 +25,10 @@ export default function SignUp() {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
+      console.log(data);
       if (data.success === false) {
-        setError(data.message);
         setLoading(false);
+        setError(data.message);
         return;
       }
       setLoading(false);
@@ -46,11 +39,9 @@ export default function SignUp() {
       setError(error.message);
     }
   };
-
   return (
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="text-3xl text-center font-semibold my-7">Sign Up</h1>
-      {/* flex class, stacking the flex elements with a gap of 4 */}
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
           type="text"
@@ -73,11 +64,12 @@ export default function SignUp() {
           id="password"
           onChange={handleChange}
         />
+
         <button
           disabled={loading}
-          className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-70"
+          className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
         >
-          {loading ? "Loading" : "Sign Up"}
+          {loading ? "Loading..." : "Sign Up"}
         </button>
         <OAuth />
       </form>
@@ -87,7 +79,6 @@ export default function SignUp() {
           <span className="text-blue-700">Sign in</span>
         </Link>
       </div>
-      {/* if error is true, red-text-error is displayed. If false, displays nothing */}
       {error && <p className="text-red-500 mt-5">{error}</p>}
     </div>
   );

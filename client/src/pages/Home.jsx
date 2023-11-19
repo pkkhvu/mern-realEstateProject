@@ -4,7 +4,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import SwiperCore from "swiper";
 import "swiper/css/bundle";
-import Card from "../components/Card";
+import ListingItem from "../components/ListingItem";
 
 export default function Home() {
   const [offerListings, setOfferListings] = useState([]);
@@ -40,7 +40,7 @@ export default function Home() {
         const data = await res.json();
         setSaleListings(data);
       } catch (error) {
-        console.log(error);
+        log(error);
       }
     };
     fetchOfferListings();
@@ -55,7 +55,7 @@ export default function Home() {
           place with ease
         </h1>
         <div className="text-gray-400 text-xs sm:text-sm">
-          Alpha Estate is the best place to find your next perfect place to
+          Sahand Estate is the best place to find your next perfect place to
           live.
           <br />
           We have a wide range of properties for you to choose from.
@@ -64,7 +64,7 @@ export default function Home() {
           to={"/search"}
           className="text-xs sm:text-sm text-blue-800 font-bold hover:underline"
         >
-          Get started...
+          Let's get started...
         </Link>
       </div>
 
@@ -95,7 +95,6 @@ export default function Home() {
               <h2 className="text-2xl font-semibold text-slate-600">
                 Recent offers
               </h2>
-              {/*Specifies the target route the link should navigate to. In this case, it's set to "/search?offer=true". This means that clicking the link will take the user to the "/search" route with the query parameter "offer" set to "true". */}
               <Link
                 className="text-sm text-blue-800 hover:underline"
                 to={"/search?offer=true"}
@@ -105,7 +104,7 @@ export default function Home() {
             </div>
             <div className="flex flex-wrap gap-4">
               {offerListings.map((listing) => (
-                <Card listing={listing} key={listing._id} />
+                <ListingItem listing={listing} key={listing._id} />
               ))}
             </div>
           </div>
@@ -125,7 +124,7 @@ export default function Home() {
             </div>
             <div className="flex flex-wrap gap-4">
               {rentListings.map((listing) => (
-                <Card listing={listing} key={listing._id} />
+                <ListingItem listing={listing} key={listing._id} />
               ))}
             </div>
           </div>
@@ -145,7 +144,7 @@ export default function Home() {
             </div>
             <div className="flex flex-wrap gap-4">
               {saleListings.map((listing) => (
-                <Card listing={listing} key={listing._id} />
+                <ListingItem listing={listing} key={listing._id} />
               ))}
             </div>
           </div>
