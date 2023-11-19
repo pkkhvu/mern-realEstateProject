@@ -1,5 +1,5 @@
 import express from "express";
-import { create } from "../controllers/listing.controller.js";
+import { createListing } from "../controllers/listing.controller.js";
 import { deleteListing } from "../controllers/listing.controller.js";
 import { updateListing } from "../controllers/listing.controller.js";
 import { getListing } from "../controllers/listing.controller.js";
